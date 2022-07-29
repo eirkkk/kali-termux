@@ -32,7 +32,7 @@ After installation, on Termux, you can execute this command to run nethunter:
 On nethunter, run this command to start VNC Server:
 
 ```bash
-sudo vncserver :1
+vncserver :1
 ```
 
 Then you can use VNC Client to connect to `localhost:1` 
@@ -42,7 +42,7 @@ Then you can use VNC Client to connect to `localhost:1`
 On nethunter, run this command to stop VNC Server:
 
 ```bash
-sudo vncserver -kill :1
+vncserver -kill :1
 ```
 
 ## VNC  For Android
