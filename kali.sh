@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-pkg install wget -y
+pkg install wget proot tar git -y
 wget "https://andronixos.sfo2.cdn.digitaloceanspaces.com/OS-Files/setup-audio.sh" && chmod +x setup-audio.sh && ./setup-audio.sh
 
 folder=kali-fs
@@ -8,7 +8,7 @@ if [ -d "$folder" ]; then
 	first=1
 	echo "skipping downloading"
 fi
-tarball="kali-rootfs-arm64.tar.xz"
+tarball="kali-rootfs.tar.xz"
 
 termux-setup-storage
 
@@ -27,7 +27,7 @@ if [ "$first" != 1 ];then
 		*)
 			echo "unknown architecture"; exit 1 ;;
 		esac
-		wget "https://raw.githubusercontent.com/EXALAB/AnLinux-Resources/master/Rootfs/Kali/arm64/kali-rootfs-arm64.tar.xz" -O $tarball
+		wget "https://raw.githubusercontent.com/EXALAB/AnLinux-Resources/master/Rootfs/Kali/${archurl}/kali-rootfs-${archurl}.tar.xz" -O $tarball
 
 	fi
 
@@ -178,7 +178,7 @@ if [ ! -f "${cur}/${folder}/proc/fakethings/vmstat" ]; then
 	EOF
 fi
 
-bin=start-kali.sh
+bin=kalis.sh
 echo "writing launch script"
 cat > $bin <<- EOM
 #!/bin/bash
@@ -236,20 +236,15 @@ rm -rf kali-fs/usr/local/bin/*
 
 echo "127.0.0.1 localhost" > $folder/etc/hosts
 echo "Set disable_coredump false" > $folder/etc/sudo.conf
-wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/.bash_profile -O kali-fs/root/.bash_profile > /dev/null
-wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/vnc -P kali-fs/usr/local/bin > /dev/null
-wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/vncpasswd -P kali-fs/usr/local/bin > /dev/null
-wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/vncserver-stop -P kali-fs/usr/local/bin > /dev/null
-wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/vncserver-start -P kali-fs/usr/local/bin > /dev/null
-
-wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/firstrun -P kali-fs/usr/share/andronix > /dev/null
+wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.bash_profile -O kali-fs/root/.bash_profile > /dev/null
+wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/firstrun -P kali-fs/usr/share/andronix > /dev/null
 
 mkdir -p kali-fs/usr/share/andronix
 case "$1" in
 	"nde")
 		;;
   "lxde")
-		wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/de-lxde -O kali-fs/usr/share/andronix/de-install > /dev/null
+		wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/de-lxde -O kali-fs/usr/share/andronix/de-install > /dev/null
     ;;
 	*)
 		wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/de-xfce -O kali-fs/usr/share/andronix/de-install > /dev/null
@@ -258,10 +253,6 @@ esac
 
 chmod +x kali-fs/root/.bash_profile
 chmod +x kali-fs/root/.profile
-chmod +x kali-fs/usr/local/bin/vnc
-chmod +x kali-fs/usr/local/bin/vncpasswd
-chmod +x kali-fs/usr/local/bin/vncserver-start
-chmod +x kali-fs/usr/local/bin/vncserver-stop
 
 echo "fixing shebang of $bin"
 termux-fix-shebang $bin
