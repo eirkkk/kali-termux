@@ -29,7 +29,7 @@ After installation, on Termux, you can execute this command to run nethunter:
 
 ### Start VNC Server
 
-On Ubuntu, run this command to start VNC Server:
+On nethunter, run this command to start VNC Server:
 
 ```bash
 sudo vncserver :1
@@ -39,7 +39,7 @@ Then you can use VNC Client to connect to `localhost:1`
 
 ### Stop VNC Server
 
-On Ubuntu, run this command to stop VNC Server:
+On nethunter, run this command to stop VNC Server:
 
 ```bash
 sudo vncserver -kill :1
