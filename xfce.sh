@@ -8,7 +8,7 @@ sudo apt-mark hold udisks2
 sudo apt install keyboard-configuration -y
 sudo apt install tzdata -y
 sudo apt install sudo wget nano inetutils-tools dialog -y
-sudo apt install kali-desktop-xfce xfce4-goodies xfce4-terminal tightvncserver dbus-x11 ffmpeg --no-install-recommends -y
+sudo apt install kali-desktop-xfce xfce4-goodies xfce4-terminal tightvncserver dbus-x11 xfonts-base xfonts-75dpi xfonts-100dpi ffmpeg --no-install-recommends -y
 sudo apt --fix-broken install
 sudo apt clean
 
