@@ -42,7 +42,7 @@ clear
 # Depending on user choice, download and configure the appropriate version
 if [ $version_choice -eq 1 ]; then
     echo "Downloading and configuring Root version..."
-    wget -q https://raw.githubusercontent.com/eirkkk/Droidbox/main/Droidbox/droidbox  > /dev/null 2>&1
+    wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/kali  > /dev/null 2>&1
     chmod +x kali
     mv kali /data/data/com.termux/files/usr/bin/
    wget -q https://kali.download/nethunter-images/current/rootfs/kalifs-arm64-minimal.tar.xz > /dev/null 2>&1
@@ -68,8 +68,8 @@ if [ $version_choice -eq 1 ]; then
    
 elif [ $version_choice -eq 2 ]; then
     echo "Downloading and configurg Proot version..."
-    wget -q https://raw.githubusercontent.com/eirkkk/Droidbox/main/start-kali  > /dev/null 2>&1
-    wget -q https://raw.githubusercontent.com/eirkkk/Droidbox/main/kali  > /dev/null 2>&1
+    wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/Kali/start-kali  > /dev/null 2>&1
+    wget -q https://raw.githubusercontent.com/eirkkk/Droidbox/main/Kali/kali  > /dev/null 2>&1
     chmod +x start-kail kali
     wget https://kali.download/nethunter-images/current/rootfs/kalifs-arm64-minimal.tar.xz  > /dev/null 2>&1
     mv start-kali kali /data/data/com.termux/files/usr/bin/
