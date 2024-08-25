@@ -15,7 +15,7 @@ Copy and paste this command to Termux:
 ### nethunter 
 
 ```bash
-curl -o https://raw.githubusercontent.com/eirkkk/kali-termux/main/setup && chmod +x setup && ./setup && rm setup
+wget https://raw.githubusercontent.com/eirkkk/kali-termux/main/setup && chmod +x setup && ./setup && rm setup
 ```
 
 ### Start nethunter
