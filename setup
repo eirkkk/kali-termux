@@ -42,7 +42,7 @@ clear
 # Depending on user choice, download and configure the appropriate version
 if [ $version_choice -eq 1 ]; then
     echo "Downloading and configuring Root version..."
-    wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/kali  > /dev/null 2>&1
+    wget https://raw.githubusercontent.com/eirkkk/kali-termux/main/kali  > /dev/null 2>&1
     chmod +x kali
     mv kali /data/data/com.termux/files/usr/bin/
    wget -q https://kali.download/nethunter-images/current/rootfs/kalifs-arm64-minimal.tar.xz > /dev/null 2>&1
