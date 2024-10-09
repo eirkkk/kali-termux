@@ -46,11 +46,11 @@ if [ $version_choice -eq 1 ]; then
     chmod +x kali
     mv kali /data/data/com.termux/files/usr/bin/
    wget -q https://kali.download/nethunter-images/current/rootfs/kalifs-arm64-minimal.tar.xz > /dev/null 2>&1
-   sudo tar -xf kalifs-arm64-minimal.tar.xz -C /data/local/
+   sudo tar -xf kali-nethunter-rootfs-minimal-arm64.tar.xz -C /data/local/
    sudo mkdir /data/local/.kali
    sudo mv  /data/local/kali-arm64/*  /data/local/.kali
    sudo rm -rf /data/local/kali-arm64
-   rm -rf kalifs-arm64-minimal.tar.xz
+   rm -rf kali-nethunter-rootfs-minimal-arm64.tar.xz
    sudo mkdir -p /data/local/.kali/system
    sudo mkdir -p /data/local/.kali/data
    sudo mkdir -p /data/local/.kali/sdcard
@@ -71,11 +71,11 @@ elif [ $version_choice -eq 2 ]; then
     wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/Kali/start-kali  > /dev/null 2>&1
     wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/Kali/kali  > /dev/null 2>&1
     chmod +x start-kail kali
-    wget https://kali.download/nethunter-images/current/rootfs/kalifs-arm64-minimal.tar.xz  > /dev/null 2>&1
+    wget https://kali.download/nethunter-images/kali-2024.3/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz  > /dev/null 2>&1
     mv start-kali kali /data/data/com.termux/files/usr/bin/
     proot --link2symlink tar -xf  kalifs-arm64-minimal.tar.xz -C $HOME/ > /dev/null 2>&1
    mv $HOME/kali-arm64 .kali 
-rm  kalifs-arm64-minimal.tar.xz
+rm  kali-nethunter-rootfs-minimal-arm64.tar.xz
    
 fi
 # Remove the downloaded tar file
