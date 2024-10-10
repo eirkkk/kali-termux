@@ -48,8 +48,8 @@ if [ $version_choice -eq 1 ]; then
    wget -q https://kali.download/nethunter-images/kali-2024.3/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz > /dev/null 2>&1
    sudo tar -xf kali-nethunter-rootfs-minimal-arm64.tar.xz -C /data/local/
    sudo mkdir /data/local/.kali
-   sudo mv  /data/local/kali-arm64/*  /data/local/.kali
-   sudo rm -rf /data/chroot/local/kali-arm64
+   sudo mv  /data/local/chroot/kali-arm64/*  /data/local/.kali
+   sudo rm -rf /data/local/chroot/kali-arm64
    rm -rf kali-nethunter-rootfs-minimal-arm64.tar.xz
    sudo mkdir -p /data/local/.kali/system
    sudo mkdir -p /data/local/.kali/data
