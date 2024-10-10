@@ -49,7 +49,7 @@ if [ $version_choice -eq 1 ]; then
    sudo tar -xf kali-nethunter-rootfs-minimal-arm64.tar.xz -C /data/local/
    sudo mkdir /data/local/.kali
    sudo mv  /data/local/chroot/kali-arm64/*  /data/local/.kali
-   sudo rm -rf /data/local/chroot/kali-arm64
+   sudo rm -rf /data/local/chroot/kali-arm64 /data/local/chroot
    rm -rf kali-nethunter-rootfs-minimal-arm64.tar.xz
    sudo mkdir -p /data/local/.kali/system
    sudo mkdir -p /data/local/.kali/data
