@@ -52,7 +52,7 @@ then
             done
 	fi
         sudo rm -r  /data/local/Ubuntu
-        rm $PREFIX/bin/kali
+        rm $PREFIX/bin/ubuntu
 	echo "Done!"
 elif [ $1 = "--version" ]
 then
@@ -63,7 +63,7 @@ then
         echo "Usage:  Ubuntu {argument}"
  	echo "Available arguments:"
         echo "--start - start Ubuntu"
-        echo "--update - update Kali NetHunter"
+        echo "--update - update Ubuntu"
         echo "--uninstall - uninstall Ubuntu (all data in rootfs will be clear)"
         echo "--version - show current version of Ubuntu "
         echo "--help - see available arguments"
