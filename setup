@@ -1,97 +1,93 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Set the countdown timer (e.g., 60 seconds)
+
 countdown=60
 clear
-# Function to display countdown in hh:mm:ss format
+
 function display_countdown() {
     local hours=$((countdown / 3600))
     local minutes=$(( (countdown % 3600) / 60 ))
     local seconds=$((countdown % 60))
     echo -ne "Time remaining: $(printf "%02d:%02d:%02d" $hours $minutes $seconds)\r"
 }
- 
-# Ask user for versions 
+
 echo "Select version to install:"
-echo "1) Kali Root version"
-echo "2) Kali Proot version"
-read -p "Enter choice (1 or 2): " version_choice
- 
-# Validate user input
-if [[ $version_choice -ne 1 ]] && [[ $version_choice -ne 2 ]]; then
+echo "1) Root version"
+read -p "Enter choice (1): " version_choice
+
+echo "Choose the distribution:"
+echo "- 1) Kali"
+echo "- 2) Parrot"
+echo "- 3) Ubuntu"
+read -p "Enter choice (1-3): " os_choice
+
+if [[ $version_choice -ne 1 ]]; then
     echo "Invalid choice. Exiting."
     exit 1
 fi
- 
-# Start the main process
-echo "Updating package list..."
-pkg update -y && echo "Update completed."
- 
-# Clear the screen
-clear
- 
-echo "Installing required packages..."
-pkg install x11-repo -y  > /dev/null 2>&1
-pkg install proot-distro proot termux-x11-nightly wget git pulseaudio debootstrap tsu -y  > /dev/null 2>&1
- 
-# Setup storage access for Termux
-termux-setup-storage
- 
-# Download Ubuntu base image
-echo "Downloading Rootfs base image..."
-clear
-# Depending on user choice, download and configure the appropriate version
-if [ $version_choice -eq 1 ]; then
-    echo "Downloading and configuring Root version..."
-    wget https://raw.githubusercontent.com/eirkkk/kali-termux/refs/heads/main/kali  > /dev/null 2>&1
-    chmod +x kali
-    mv kali /data/data/com.termux/files/usr/bin/
-   wget -q https://kali.download/nethunter-images/kali-2024.3/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz > /dev/null 2>&1
-   sudo tar -xf kali-nethunter-rootfs-minimal-arm64.tar.xz -C /data/local/
-   sudo mkdir /data/local/.kali
-   sudo mv  /data/local/chroot/kali-arm64/*  /data/local/.kali
-   sudo rm -rf /data/local/chroot/kali-arm64 /data/local/chroot
-   rm -rf kali-nethunter-rootfs-minimal-arm64.tar.xz
-   sudo mkdir -p /data/local/.kali/system
-   sudo mkdir -p /data/local/.kali/data
-   sudo mkdir -p /data/local/.kali/sdcard
-   su -c echo " "nameserver 8.8.8.8" > /data/local/.kali/etc/resolv.conf"
-   su -c echo  " 'APT::Sandbox::User "root";' > /data/local/.kali/etc/apt/apt.conf.d/01-android-nosandbox"
-   su -c echo  " "127.0.0.1 localhost" > /data/local/.kali/etc/hosts"
-   su -c chroot  /data/local/.kali /bin/su -c "groupadd -g 3003 aid_inet 2>/dev/null"
-   su -c chroot  /data/local/.kali /bin/su -c "groupadd -g 3004 aid_net_raw 2>/dev/null"
-   su -c chroot  /data/local/.kali /bin/su -c "groupadd -g 1003 aid_graphics 2>/dev/null"
-   su -c chroot  /data/local/.kali /bin/su -c "usermod -g 3003 -G 3003,3004 -a _apt 2>/dev/null"
-   su -c chroot  /data/local/.kali /bin/su -c "usermod -G 3003 -a root 2>/dev/null"
-   su -c chroot  /data/local/.kali /bin/su -c "ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime 2>/dev/null"
-   su -c chroot  /data/local/.kali /bin/su -c "locale-gen en_US.UTF-8 2>/dev/null"
-   
-   
-elif [ $version_choice -eq 2 ]; then
-    echo "Downloading and configurg Proot version..."
-    wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/Kali/start-kali  > /dev/null 2>&1
-    wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/main/Kali/kali  > /dev/null 2>&1
-    chmod +x start-kail kali
-    wget https://kali.download/nethunter-images/kali-2024.3/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz  > /dev/null 2>&1
-    mv start-kali kali /data/data/com.termux/files/usr/bin/
-    proot --link2symlink tar -xf  kalifs-arm64-minimal.tar.xz -C $HOME/ > /dev/null 2>&1
-mkdir $HOME/.kali   
-mv $HOME/chroot/kali-arm64/* .kali 
-rm  kali-nethunter-rootfs-minimal-arm64.tar.xz
-   
+
+if [[ $os_choice -lt 1 || $os_choice -gt 3 ]]; then
+    echo "Invalid OS choice. Exiting."
+    exit 1
 fi
-# Remove the downloaded tar file
- 
- 
-# Countdown timer synchronized with execution
+
+case $os_choice in
+    1) os_name="kali"
+       os_url="https://kali.download/nethunter-images/current/rootfs/kali-nethunter-rootfs-minimal-arm64.tar.xz" ;;
+    2) os_name="parrot"
+       os_url="https://deb.parrot.sh/direct/parrot/iso/6.1/Parrot-rootfs-6.1_arm64.tar.xz" ;;
+    3) os_name="ubuntu"
+       os_url="https://cdimage.ubuntu.com/ubuntu-base/jammy/daily/current/jammy-base-arm64.tar.gz" ;;
+esac
+
+echo "Updating package list..."
+pkg update -y && echo "Update completed." || { echo "Update failed."; exit 1; }
+
+clear
+
+echo "Installing required packages..."
+pkg install x11-repo -y
+pkg install proot-distro termux-x11-nightly wget git pulseaudio debootstrap tsu -y || { echo "Package installation failed."; exit 1; }
+
+wget -q "$os_url" -O rootfs.tar.xz || { echo "Download failed."; exit 1; }
+wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/refs/heads/main/$os_name -O $os_name || { echo "Download failed."; exit 1; }
+chmod +x $os_name || { echo "Failed to change permissions."; exit 1; }
+mv $os_name /data/data/com.termux/files/usr/bin/ || { echo "Move failed."; exit 1; }
+
+os_dir="/data/local/$os_name"
+echo "Creating directory $os_dir..."
+sudo mkdir -p "$os_dir" || { echo "Directory creation failed."; exit 1; }
+if [[ $os_name == "kali" ]]; then
+    sudo tar -xf rootfs.tar.xz -C /data/local/ || { echo "Extraction failed."; exit 1; }
+    sudo mv /data/local/chroot/kali-arm64/* "$os_dir"
+    sudo rm -rf /data/local/chroot/kali-arm64 /data/local/chroot
+else
+    sudo tar -xf rootfs.tar.xz -C "$os_dir" || { echo "Extraction failed."; exit 1; }
+fi
+
+termux-setup-storage
+
+sudo mkdir -p "$os_dir/system"
+sudo mkdir -p "$os_dir/data"
+sudo mkdir -p "$os_dir/sdcard"
+
+su -c "echo 'nameserver 8.8.8.8' > /data/local/$os_name/etc/resolv.conf"
+su -c "echo 'APT::Sandbox::User \"root\";' > /data/local/$os_name/etc/apt/apt.conf.d/01-android-nosandbox"
+su -c "echo '127.0.0.1 localhost' > /data/local/$os_name/etc/hosts"
+sudo chroot "$os_dir" /bin/su -c "groupadd -g 3003 aid_inet 2>/dev/null"
+sudo chroot "$os_dir" /bin/su -c "groupadd -g 3004 aid_net_raw 2>/dev/null"
+sudo chroot "$os_dir" /bin/su -c "groupadd -g 1003 aid_graphics 2>/dev/null"
+sudo chroot "$os_dir" /bin/su -c "usermod -g 3003 -G 3003,3004 -a _apt 2>/dev/null"
+sudo chroot "$os_dir" /bin/su -c "usermod -G 3003 -a root 2>/dev/null"
+sudo chroot "$os_dir" /bin/su -c "ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime 2>/dev/null"
+sudo chroot "$os_dir" /bin/su -c "locale-gen en_US.UTF-8 2>/dev/null"
+
+rm -f rootfs.tar.xz
+
 while [ $countdown -gt 0 ]; do
     display_countdown
     sleep 1
     ((countdown--))
 done
- 
-# Clear the countdown message
+
 echo -ne "\r\033[K"
- 
-# Completion message
 echo "Execution completed successfully!"
- 
