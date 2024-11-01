@@ -21,7 +21,7 @@ Copy and paste this command to Termux:
 curl -o setup https://raw.githubusercontent.com/eirkkk/kali-termux/main/setup && chmod +x setup && ./setup && rm setup
 ```
 
-### Start NetHnuter
+### Start Linux OS
 After installation, on Termux, you can execute this command to run nethunter:
 
 ```bash
