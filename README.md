@@ -1,6 +1,6 @@
 # Install Linux on Termux Android
 
-This installs nethunter with xfce4 desktop on Termux. All scripts are from Andronix, I just compose and edit them to make the installer easier and smoother. It includes:
+This installs Linux OS with xfce4 desktop on Termux. All scripts are from Andronix, I just compose and edit them to make the installer easier and smoother. It includes:
 
 - [x] XFCE4 Desktop
 - [x] Termux X11
