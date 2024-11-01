@@ -4,7 +4,7 @@ This installs nethunter with xfce4 desktop on Termux. All scripts are from Andro
 
 - [x] XFCE4 Desktop
 - [x] Termux X11
-- [x] Proot And Chroot
+- [x] Chroot
 - [x] Audio Support
 
 ## Installation
