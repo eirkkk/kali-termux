@@ -13,6 +13,10 @@ Copy and paste this command to Termux:
 
 ### Linux OS 
 
+- [x] Kali
+- [x] Parrot
+- [x] Ubuntu
+
 ```bash
 curl -o setup https://raw.githubusercontent.com/eirkkk/kali-termux/main/setup && chmod +x setup && ./setup && rm setup
 ```
