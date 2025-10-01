@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/data/data/com.nightmare.neo/files/usr/bin/bash
 
 countdown=60
 clear
