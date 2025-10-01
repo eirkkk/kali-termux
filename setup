@@ -51,7 +51,7 @@ pkg install proot-distro termux-x11-nightly wget git pulseaudio debootstrap tsu 
 wget -q "$os_url" -O rootfs.tar.xz || { echo "Download failed."; exit 1; }
 wget -q https://raw.githubusercontent.com/eirkkk/kali-termux/refs/heads/main/$os_name -O $os_name || { echo "Download failed."; exit 1; }
 chmod +x $os_name || { echo "Failed to change permissions."; exit 1; }
-mv $os_name /data/data/com.termux/files/usr/bin/ || { echo "Move failed."; exit 1; }
+mv $os_name /data/data/com.nightmare.neo/files/usr/bin/ || { echo "Move failed."; exit 1; }
 
 os_dir="/data/local/$os_name"
 echo "Creating directory $os_dir..."
